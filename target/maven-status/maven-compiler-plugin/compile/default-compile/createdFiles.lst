@@ -18,7 +18,6 @@ com\amazon\alexa\avs\message\request\context\AlertsStatePayload.class
 com\amazon\alexa\avs\auth\companionapp\CompanionAppAuthManager$1.class
 com\amazon\alexa\avs\exception\DirectiveHandlingException$ExceptionType.class
 com\amazon\alexa\avs\message\request\alerts\AlertPayload.class
-com\lyonsdensoftware\vanitymirror\vanityMirrorGUI$1.class
 com\amazon\alexa\avs\MicrophoneLineFactory.class
 com\amazon\alexa\avs\AVSAudioPlayer$4.class
 com\amazon\alexa\avs\auth\companionapp\CompanionAppProvisioningInfo.class

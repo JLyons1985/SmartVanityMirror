@@ -16,11 +16,12 @@
 * Project File: Alexa.java
 * Project Description: Handles the higher level Alexa stuff like getting 
 *  the auth token on startup an handling all the voice data.
-* Author: Joshua Lyons (josh@lyonsdensoftware.com)
+* @author  Joshua Lyons (josh@lyonsdensoftware.com)
 *************************************************************************/
 
 package com.lyonsdensoftware.vanitymirror;
 
+// IMPORTS
 import com.amazon.alexa.avs.AVSAudioPlayerFactory;
 import com.amazon.alexa.avs.AVSController;
 import com.amazon.alexa.avs.AlertManagerFactory;
@@ -48,25 +49,40 @@ import javax.swing.JTextArea;
 public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
         RegCodeDisplayHandler, AccessTokenListener {
     
-    // Class Variable Declaration
+    // CLASS VARIABLES
+    
+    /**
+     * Logger for the Alexa class.
+     */
     private static final Logger log = LoggerFactory.getLogger(Alexa.class);
     
     private final AVSController controller;
     private Thread autoEndpoint = null; // used to auto-endpoint while listening
     private final DeviceConfig deviceConfig;
+    
     // minimum audio level threshold under which is considered silence
     private static final int ENDPOINT_THRESHOLD = 5;
     private static final int ENDPOINT_SECONDS = 2; // amount of silence time before endpointing
+    
     private String accessToken;
+    
+    // Labels for the button, Will replaced in final version
     private static final String START_LABEL = "Start Listening";
     private static final String STOP_LABEL = "Stop Listening";
     private static final String PROCESSING_LABEL = "Processing";
+    
     private JButton actionButton;
     private JProgressBar visualizer;
-    private vanityMirrorGUI mainWindow;
+    private final vanityMirrorGUI mainWindow;
 
-    private AuthSetup authSetup;
+    private final AuthSetup authSetup;
     
+    /**
+     * Creates a new Alexa
+     * @param config Config to get passed to Alexa
+     * @param mainWindow Reference to the vanityMirrorGUI window
+     * @throws Exception
+     */
     public Alexa(DeviceConfig config, vanityMirrorGUI mainWindow) throws Exception {
         
         this.mainWindow = mainWindow;
@@ -77,18 +93,24 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
         authSetup = new AuthSetup(config, this);
         authSetup.addAccessTokenListener(this);
         authSetup.addAccessTokenListener(controller);
-        authSetup.startProvisioningThread();
-
-        
+        authSetup.startProvisioningThread();     
 
         controller.startHandlingDirectives();
     }
     
+    /**
+     * 
+     * @param config
+     * @return AVSClientFactory
+     */
     protected AVSClientFactory getAVSClientFactory(DeviceConfig config) {
         return new AVSClientFactory(config);
     }
     
-    public void addActionField() {
+    /**
+     * Handles the actions when the ptt is pressed
+     */
+    public void pttPressed() {
         final RecordingRMSListener rmsListener = this;
         actionButton = mainWindow.getActionButton();
         visualizer = mainWindow.getVisualizer();
@@ -125,7 +147,9 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
         }
     }
       
-    
+    /**
+     * Finish processing the recording
+     */
     public void finishProcessing() {
         mainWindow.getActionButton().setText(START_LABEL);
         mainWindow.getActionButton().setEnabled(true);
@@ -134,6 +158,10 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
 
     }
     
+    /**
+     * 
+     * @param rms 
+     */
     @Override
     public void rmsChanged(int rms) { // AudioRMSListener callback
         // if greater than threshold or not recording, kill the autoendpoint thread
@@ -164,6 +192,9 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
         visualizer.setValue(rms); // update the visualizer
     }
 
+    /**
+     * Handles for the Expect Speech Directive
+     */
     @Override
     public void onExpectSpeechDirective() {
         Thread thread = new Thread() {
@@ -183,6 +214,10 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
 
     }
 
+    /**
+     * Used to show dialog messages for debugging
+     * @param message 
+     */
     public void showDialog(String message) {
         JTextArea textMessage = new JTextArea(message);
         textMessage.setEditable(false);
@@ -190,6 +225,10 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * 
+     * @param regCode 
+     */
     @Override
     public void displayRegCode(String regCode) {
         String regUrl =
@@ -199,6 +238,10 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
                 + "\n\n Hit OK once completed.");
     }
 
+    /**
+     * Handles when an access token is recieved.
+     * @param accessToken 
+     */
     @Override
     public synchronized void onAccessTokenReceived(String accessToken) {
         this.accessToken = accessToken;        

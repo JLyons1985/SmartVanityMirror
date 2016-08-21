@@ -1,0 +1,316 @@
+/*************************************************************************
+* Copyright 2016 Joshua Lyons
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* Project File: vanityMirrorGUI.java
+* Project Description: GUI for Rachels Vanity Mirror
+* Author: Joshua Lyons (josh@lyonsdensoftware.com)
+*************************************************************************/
+
+package com.lyonsdensoftware.vanitymirror;
+
+import com.amazon.alexa.avs.config.DeviceConfig;
+import com.amazon.alexa.avs.config.DeviceConfigUtils;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import javax.swing.JButton;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
+import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.trigger.GpioSetStateTrigger;
+
+
+@SuppressWarnings("serial")
+/**
+ *
+ * @author jlyon
+ */
+public class vanityMirrorGUI extends javax.swing.JFrame {
+    
+    private static final Logger log = LoggerFactory.getLogger(vanityMirrorGUI.class);
+    static Alexa alexa;
+
+    private static final String APP_TITLE = "Alexa Voice Service";
+    private static final String START_LABEL = "Start Listening";
+    
+    // GPIO variables
+    private final GpioController gpio = GpioFactory.getInstance();
+    private final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
+    
+    final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "MyLED", PinState.LOW);
+
+    
+    private Thread autoEndpoint = null; // used to auto-endpoint while listening
+    // minimum audio level threshold under which is considered silence
+    private static final int ENDPOINT_THRESHOLD = 5;
+    private static final int ENDPOINT_SECONDS = 2; // amount of silence time before endpointing
+
+    /**
+     * Creates new form vanityMirrorGUI
+     */
+    public vanityMirrorGUI() throws Exception {
+        this(DeviceConfigUtils.readConfigFile());
+    }
+    
+    public vanityMirrorGUI(String configName) throws Exception {
+        this(DeviceConfigUtils.readConfigFile(configName));
+    }
+    
+    public vanityMirrorGUI(DeviceConfig config) throws Exception {
+        initComponents();
+        
+        alexa = new Alexa(config, this);
+        
+        myButton.setShutdownOptions(true);
+        // create and register gpio pin listener
+        myButton.addListener(new MyGpioPinListener(alexa));
+
+        addActionField();
+
+        //getContentPane().setLayout(new GridLayout(0, 1));
+        setTitle(getAppTitle());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setSize(400, 200);
+        setVisible(true);
+    }
+      
+    private void addActionField() {
+        actionButton.setText(START_LABEL);
+        actionButton.setEnabled(true);
+        // create and register gpio pin listener
+        //myButton.addListener(new MyGPIOListerner(alexa));
+
+        actionButton.addActionListener(new MyButtonListerner(alexa));
+    }   
+    
+    private String getAppVersion() {
+        final Properties properties = new Properties();
+        try (final InputStream stream = getClass().getResourceAsStream("/res/version.properties")) {
+            properties.load(stream);
+            if (properties.containsKey("version")) {
+                return properties.getProperty("version");
+            }
+        } catch (IOException e) {
+            log.warn("version.properties file not found on classpath");
+        }
+        return null;
+    }
+    
+    private String getAppTitle() {
+        String version = getAppVersion();
+        String title = APP_TITLE;
+        if (version != null) {
+            title += " - v" + version;
+        }
+        return title;
+    }
+    
+    public JButton getActionButton () {
+        return this.actionButton;
+    }
+    
+    public javax.swing.JProgressBar getVisualizer() {
+        return this.visualizer;
+    }
+    
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTextField1 = new javax.swing.JTextField();
+        mainPanel = new javax.swing.JPanel();
+        visualizer = new javax.swing.JProgressBar();
+        actionButton = new javax.swing.JButton();
+        container = new javax.swing.JPanel();
+
+        jTextField1.setText("jTextField1");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        mainPanel.setName(""); // NOI18N
+
+        actionButton.setText("jButton1");
+
+        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        container.setLayout(containerLayout);
+        containerLayout.setHorizontalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        containerLayout.setVerticalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(actionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(visualizer, javax.swing.GroupLayout.DEFAULT_SIZE, 937, Short.MAX_VALUE)
+                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(visualizer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(actionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(296, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws Exception{
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                if (args.length == 1)
+                {
+                    try {
+                        new vanityMirrorGUI(args[0]).setVisible(true);
+                    } catch (Exception ex) {
+                        java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                    try {
+                        new vanityMirrorGUI().setVisible(true);
+                    } catch (Exception ex) {
+                        java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+    }
+    
+    
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton actionButton;
+    private javax.swing.JPanel container;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JProgressBar visualizer;
+    // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the myButton
+     */
+    public void toggelPin() {
+        pin.toggle();
+    }
+
+}
+
+class MyButtonListerner implements ActionListener {
+    
+    // Variables
+    private Alexa privateAlexa;
+    
+    public MyButtonListerner(Alexa alexa) {
+        privateAlexa = alexa;
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        privateAlexa.addActionField();
+    }
+}
+
+class MyGpioPinListener implements GpioPinListenerDigital {
+    
+    // Variables
+    private Alexa privateAlexa;
+    
+    public MyGpioPinListener(Alexa alexa) {
+        privateAlexa = alexa;
+    }
+    
+    @Override
+    public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+         //privateAlexa.addActionField();
+         // display pin state on console
+        if (event.getState() == PinState.LOW) {
+            System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
+        }
+    }
+}

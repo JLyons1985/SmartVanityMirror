@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.amazon.alexa.avs</groupId>
+  <groupId>com.lyonsdensoftware</groupId>
   <artifactId>rachelsVanityMirror</artifactId>
-  <version>20160820</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
   <name>Rachel's Vanity Mirror</name>
   <url>https://developer.amazon.com/appsandservices/solutions/alexa/alexa-voice-service</url>

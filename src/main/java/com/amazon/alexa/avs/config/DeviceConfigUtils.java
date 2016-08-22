@@ -107,9 +107,10 @@ public final class DeviceConfigUtils {
             String provisioningMethod =
                     configObject.getString(DeviceConfig.PROVISIONING_METHOD, null);
             String avsHost = configObject.getString(DeviceConfig.AVS_HOST, null);
+            String accessToken = configObject.getString(DeviceConfig.ACCESS_TOKEN, null);
 
             DeviceConfig deviceConfig = new DeviceConfig(productId, dsn, provisioningMethod,
-                    companionAppInfo, companionServiceInfo, avsHost);
+                    companionAppInfo, companionServiceInfo, avsHost, accessToken);
 
             return deviceConfig;
         } catch (FileNotFoundException e) {

@@ -245,6 +245,8 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
     @Override
     public synchronized void onAccessTokenReceived(String accessToken) {
         this.accessToken = accessToken;        
+        deviceConfig.setAccessToken(accessToken);
+        deviceConfig.saveConfig();
     }  
     
 }

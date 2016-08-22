@@ -33,6 +33,7 @@ C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\sr
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\RequestBody.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\MessageParser.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\ParsingFailedHandler.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\ImageEffect.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\AlexaExceptionResponse.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\ResponseBody.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\Alert.java
@@ -40,13 +41,16 @@ C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\sr
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\CompanionAppProvisioningInfo.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\server\CompanionInfoHandler.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\AVSClient.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\Exposure.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\audioplayer\PlaybackFailedPayload.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\ContentTypes.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\speechsynthesizer\ExpectSpeech.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\RPiCamera.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\State.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\ContextEventRequestBody.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\RequestListener.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\context\AlertsStatePayload.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\Encoding.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionservice\CompanionServiceRegCodeResponse.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\ComponentStateFactory.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\exception\AVSJsonProcessingException.java
@@ -77,6 +81,7 @@ C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\sr
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\ProgressReport.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\AbstractRetryPolicy.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\RetryPolicy.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\DRC.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\context\ComponentState.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\server\CompanionAppProvisioningServer.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\CompanionAppAuthManager.java
@@ -107,13 +112,16 @@ C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\sr
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\server\DeviceInfoHandler.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\SpeechRequestAudioPlayerPauseController.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\request\alerts\AlertPayload.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\lyonsdensoftware\vanitymirror\FaceRecognition.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\AVSRequest.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\AWB.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\config\DeviceConfigUtils.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\CachingContentProvider.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\Header.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\AVSAudioPlayerFactory.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\UserActivityListener.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\audioplayer\Stop.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\enums\MeteringMode.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\auth\companionapp\DeviceProvisioningInfo.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\DirectiveDispatcher.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\alerts\DeleteAlert.java
@@ -121,6 +129,7 @@ C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\sr
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\AudioPlayerActivity.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\HttpHeaders.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\Payload.java
+C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\hopding\jrpicam\exceptions\FailedToRunRaspistillException.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\AudioInputFormat.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\http\jetty\InputStreamResponseListener.java
 C:\Users\jlyon\Documents\For Rachel's B-Day\VanityMirrorGUI\SmartVanityMirror\src\main\java\com\amazon\alexa\avs\message\response\AttachedContentPayload.java

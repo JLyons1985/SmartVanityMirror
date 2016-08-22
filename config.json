@@ -12,7 +12,6 @@
         "serviceUrl":"https://localhost:3000",
         "sslClientKeyStore":"/home/pi/Desktop/alexa-avs-raspberry-pi/samples/javaclient/certs/client/client.pkcs12",
         "sslClientKeyStorePassphrase":"",
-        "sslCaCert":"/home/pi/Desktop/alexa-avs-raspberry-pi/samples/javaclient/certs/ca/ca.crt",
-        "sessionId":"2cca7fde-147e-49c6-add4-43a72b3214ef"
+        "sslCaCert":"/home/pi/Desktop/alexa-avs-raspberry-pi/samples/javaclient/certs/ca/ca.crt"
     }
 }

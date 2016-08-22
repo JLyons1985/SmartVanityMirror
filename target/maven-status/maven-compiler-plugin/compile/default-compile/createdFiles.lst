@@ -3,6 +3,7 @@ com\amazon\alexa\avs\AVSAPIConstants$SpeechRecognizer$Events$Recognize.class
 com\amazon\alexa\avs\http\AVSClient$MalformedResponseException.class
 com\amazon\alexa\avs\AVSAPIConstants$AudioPlayer$Events$PlaybackNearlyFinished.class
 com\amazon\alexa\avs\AudioPlayerStateMachine$PlaybackFailed.class
+com\hopding\jrpicam\enums\AWB.class
 com\amazon\alexa\avs\auth\companionservice\CompanionServiceAuthManager$1.class
 com\amazon\alexa\avs\AVSRequest.class
 com\amazon\alexa\avs\RequestListener.class
@@ -19,6 +20,7 @@ com\amazon\alexa\avs\auth\companionapp\CompanionAppAuthManager$1.class
 com\amazon\alexa\avs\exception\DirectiveHandlingException$ExceptionType.class
 com\amazon\alexa\avs\message\request\alerts\AlertPayload.class
 com\amazon\alexa\avs\MicrophoneLineFactory.class
+com\hopding\jrpicam\enums\Exposure.class
 com\amazon\alexa\avs\AVSAudioPlayer$4.class
 com\amazon\alexa\avs\auth\companionapp\CompanionAppProvisioningInfo.class
 com\amazon\alexa\avs\http\MultipartContentProvider.class
@@ -61,6 +63,7 @@ com\amazon\alexa\avs\AlertsDataStore.class
 com\amazon\alexa\avs\http\jetty\PingSendingHttpClientTransportOverHTTP2$ConnectionStatusHttpDestinationOverHTTP2.class
 com\amazon\alexa\avs\http\AVSClient$DownchannelRequestThread.class
 com\amazon\alexa\avs\AVSAudioPlayer$AlexaSpeechListener.class
+com\hopding\jrpicam\enums\DRC.class
 com\amazon\alexa\avs\AVSAPIConstants$Speaker$Directives$SetVolume.class
 com\amazon\alexa\avs\AVSAPIConstants$AudioPlayer$Events$PlaybackState.class
 com\amazon\alexa\avs\message\response\speechsynthesizer\ExpectSpeech.class
@@ -94,8 +97,10 @@ com\amazon\alexa\avs\AVSAPIConstants$Alerts$Directives$SetAlert.class
 com\lyonsdensoftware\vanitymirror\MyGpioPinListener.class
 com\amazon\alexa\avs\auth\companionapp\CompanionAppAuthManager$InvalidSessionIdException.class
 com\amazon\alexa\avs\AVSAPIConstants$Alerts.class
+com\hopding\jrpicam\RPiCamera.class
 com\amazon\alexa\avs\message\request\ContextEventRequestBody.class
 com\amazon\alexa\avs\AVSApp$4.class
+com\hopding\jrpicam\enums\Encoding.class
 com\amazon\alexa\avs\AVSAPIConstants$SpeechSynthesizer$Directives.class
 com\amazon\alexa\avs\AVSApp$1.class
 com\amazon\alexa\avs\message\request\context\SpeechStatePayload.class
@@ -125,6 +130,7 @@ com\amazon\alexa\avs\message\response\ResponseBody.class
 com\amazon\alexa\avs\SpeechRequestAudioPlayerPauseController$1.class
 com\amazon\alexa\avs\AudioPlayerStateMachine$PlaybackStarted.class
 com\amazon\alexa\avs\PlaybackAction.class
+com\hopding\jrpicam\exceptions\FailedToRunRaspistillException.class
 com\amazon\alexa\avs\AlertsFileDataStore$1$1.class
 com\amazon\alexa\avs\message\request\audioplayer\PlaybackFailedPayload$ErrorStructure.class
 com\amazon\alexa\avs\message\response\speechsynthesizer\Speak.class
@@ -235,6 +241,7 @@ com\amazon\alexa\avs\AudioPlayerStateMachine$PlaybackStutterStarted.class
 com\amazon\alexa\avs\BlockableDirectiveThread.class
 com\amazon\alexa\avs\message\response\audioplayer\Play$PlayBehavior.class
 com\amazon\alexa\avs\message\response\alerts\SetAlert$AlertType.class
+com\hopding\jrpicam\enums\ImageEffect.class
 com\amazon\alexa\avs\AVSAPIConstants$Alerts$Events$DeleteAlertSucceeded.class
 com\amazon\alexa\avs\message\response\audioplayer\AudioItem.class
 com\amazon\alexa\avs\AVSAPIConstants$PlaybackController$Events$NextCommandIssued.class
@@ -260,6 +267,7 @@ com\amazon\alexa\avs\AlertsFileDataStore$2.class
 com\amazon\alexa\avs\auth\companionapp\CompanionAppAuthManager$RefreshTokenTimerTask.class
 com\amazon\alexa\avs\message\request\context\VolumeStatePayload.class
 com\amazon\alexa\avs\message\response\ProgressReport.class
+com\lyonsdensoftware\vanitymirror\FaceRecognition.class
 com\amazon\alexa\avs\SimpleStateChangeTransition.class
 com\amazon\alexa\avs\http\jetty\PingSendingHttpClientTransportOverHTTP2$1.class
 com\amazon\alexa\avs\message\request\RequestFactory$Request.class
@@ -286,6 +294,7 @@ com\amazon\alexa\avs\message\response\audioplayer\ClearQueue.class
 com\amazon\alexa\avs\AlertManager.class
 com\amazon\alexa\avs\auth\companionapp\server\DeviceInfoHandler.class
 com\amazon\alexa\avs\message\request\context\ComponentState.class
+com\hopding\jrpicam\enums\MeteringMode.class
 com\amazon\alexa\avs\AVSAPIConstants$Alerts$Events$AlertStarted.class
 com\amazon\alexa\avs\AVSAPIConstants$Speaker$Events.class
 com\amazon\alexa\avs\http\jetty\InputStreamResponseListener$Input.class

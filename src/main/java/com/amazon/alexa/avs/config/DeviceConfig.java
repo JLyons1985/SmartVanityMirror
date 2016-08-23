@@ -31,7 +31,6 @@ public class DeviceConfig {
     public static final String COMPANION_SERVICE = "companionService";
     public static final String PROVISIONING_METHOD = "provisioningMethod";
     public static final String AVS_HOST = "avsHost";
-    public static final String ACCESS_TOKEN = "accessToken";
 
     /*
      * Required parameters from the config file.
@@ -40,7 +39,6 @@ public class DeviceConfig {
     private final String dsn;
     private final ProvisioningMethod provisioningMethod;
     private final URL avsHost;
-    private String accessToken;
 
     /*
      * Optional parameters from the config file.
@@ -93,7 +91,7 @@ public class DeviceConfig {
      */
     public DeviceConfig(String productId, String dsn, String provisioningMethod,
             CompanionAppInformation companionAppInfo,
-            CompanionServiceInformation companionServiceInfo, String avsHost, String accessToken) {
+            CompanionServiceInformation companionServiceInfo, String avsHost) {
 
         if (StringUtils.isBlank(productId)) {
             throw new MalformedConfigException(PRODUCT_ID + " is blank in your config file.");
@@ -128,7 +126,6 @@ public class DeviceConfig {
         this.dsn = dsn;
         this.companionServiceInfo = companionServiceInfo;
         this.companionAppInfo = companionAppInfo;
-        this.accessToken = accessToken;
         avsHost = StringUtils.isBlank(avsHost) ? DEFAULT_HOST : avsHost;
         try {
             this.avsHost = new URL(avsHost);
@@ -139,18 +136,11 @@ public class DeviceConfig {
 
     public DeviceConfig(String productId, String dsn, String provisioningMethod,
             CompanionAppInformation companionAppInfo,
-            CompanionServiceInformation companionServiceInfo, String accessToken) {
+            CompanionServiceInformation companionServiceInfo) {
         this(productId, dsn, provisioningMethod, companionAppInfo, companionServiceInfo,
-                DEFAULT_HOST, accessToken);
+                DEFAULT_HOST);
     }
 
-    /**
-     * @return accessToken.
-     */
-    public String getAccessToken() {
-        return accessToken;
-    }
-    
     /**
      * @return avsHost.
      */
@@ -206,13 +196,6 @@ public class DeviceConfig {
     public void setCompanionServiceInfo(CompanionServiceInformation companionServiceInfo) {
         this.companionServiceInfo = companionServiceInfo;
     }
-    
-    /**
-     * @param accessToken
-     */
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     /**
      * Save this file back to disk.
@@ -232,8 +215,7 @@ public class DeviceConfig {
                 .add(PRODUCT_ID, productId)
                 .add(DSN, dsn)
                 .add(PROVISIONING_METHOD, provisioningMethod.toString())
-                .add(AVS_HOST, avsHost.toString())
-                .add(ACCESS_TOKEN, accessToken);
+                .add(AVS_HOST, avsHost.toString());
 
         if (companionAppInfo != null) {
             builder.add(COMPANION_APP, companionAppInfo.toJson());

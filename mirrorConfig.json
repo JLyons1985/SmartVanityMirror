@@ -1,0 +1,9 @@
+{
+    "productId":"rachelsVanityMirror",
+    "dsn":"123456",
+    "wundergroundApi":{
+        "wundergroundApiKey":"1057953ee05f3f01",
+        "wundergroundStateIdentifier":"AZ",
+        "wundergroundCity":"Phoenix"
+    }
+}

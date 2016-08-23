@@ -286,7 +286,12 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Train trainTest = new Train();
+        try {
+            Weather myWeatherObj = new Weather();
+            System.out.println(myWeatherObj.getCurrentWeatherAsJson().toString());
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

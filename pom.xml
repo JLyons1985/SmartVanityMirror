@@ -245,6 +245,11 @@
       <scope>system</scope>
       <systemPath>${basedir}/lib/opencv-3.0.0-1.0-linux-arm.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20151123</version>
+    </dependency>
   </dependencies>
   <build>
     <resources>

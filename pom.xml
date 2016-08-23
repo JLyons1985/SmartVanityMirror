@@ -160,6 +160,71 @@
       <groupId>org.bytedeco</groupId>
       <artifactId>javacv</artifactId>
       <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/javacv.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>artoolkitplus</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/artoolkitplus.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>ffmpeg</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/ffmpeg.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>flandmark</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/flandmark.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>flycapture</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/flycapture.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacpp</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/javacpp.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>libdc1394</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/libdc1394.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>libfreenect</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/libfreenect.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>opencv</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/opencv.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>videoinput</artifactId>
+      <version>1.2</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/videoinput.jar</systemPath>
     </dependency>
   </dependencies>
   <build>

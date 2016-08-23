@@ -27,8 +27,6 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.highgui.Highgui;
-import org.opencv.contrib.FaceRecognizer;
 import org.opencv.objdetect.CascadeClassifier;
 import com.hopding.jrpicam.RPiCamera;
 
@@ -42,7 +40,7 @@ public class FaceRecognition {
         // Load the native library.
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
-        Highgui.imread("Test");
+        //Highgui.imread("Test");
     }
     
     

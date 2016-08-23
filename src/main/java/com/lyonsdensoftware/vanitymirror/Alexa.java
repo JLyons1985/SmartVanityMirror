@@ -71,8 +71,7 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
     private static final String STOP_LABEL = "Stop Listening";
     private static final String PROCESSING_LABEL = "Processing";
     
-    private JButton actionButton;
-    private JProgressBar visualizer;
+    private String pttState;
     private final vanityMirrorGUI mainWindow;
 
     private final AuthSetup authSetup;
@@ -112,11 +111,10 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
      */
     public void pttPressed() {
         final RecordingRMSListener rmsListener = this;
-        actionButton = mainWindow.getActionButton();
-        visualizer = mainWindow.getVisualizer();
+        pttState = mainWindow.getPttState();
         controller.onUserActivity();
-        if (mainWindow.getActionButton().getText().equals(START_LABEL)) { // if in idle mode
-            mainWindow.getActionButton().setText(STOP_LABEL);
+        if (mainWindow.getPttState().equals(START_LABEL)) { // if in idle mode
+            mainWindow.setPttState(STOP_LABEL);
             
             mainWindow.toggelPin();
 
@@ -132,16 +130,14 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
                     log.error("An error occured creating speech request", e);
                     JOptionPane.showMessageDialog(mainWindow.getContentPane(), e.getMessage(), "Error",
                             JOptionPane.ERROR_MESSAGE);
-                    mainWindow.getActionButton().doClick();
+                    pttPressed();
                     finishProcessing();
                 }
             };
 
             controller.startRecording(rmsListener, requestListener);
         } else { // else we must already be in listening
-            mainWindow.getActionButton().setText(PROCESSING_LABEL); // go into processing mode
-            mainWindow.getActionButton().setEnabled(false);
-            mainWindow.getVisualizer().setIndeterminate(true);
+            mainWindow.setPttState(PROCESSING_LABEL); // go into processing mode
             controller.stopRecording(); // stop the recording so the request can complete
             mainWindow.toggelPin();
         }
@@ -151,9 +147,7 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
      * Finish processing the recording
      */
     public void finishProcessing() {
-        mainWindow.getActionButton().setText(START_LABEL);
-        mainWindow.getActionButton().setEnabled(true);
-        mainWindow.getVisualizer().setIndeterminate(false);
+        mainWindow.setPttState(START_LABEL);
         controller.processingFinished();
 
     }
@@ -178,8 +172,7 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
                     public void run() {
                         try {
                             Thread.sleep(ENDPOINT_SECONDS * 1000);
-                            actionButton.doClick(); // hit stop if we get through the autoendpoint
-                                                    // time
+                            pttPressed();
                         } catch (InterruptedException e) {
                             return;
                         }
@@ -189,7 +182,6 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
             }
         }
 
-        visualizer.setValue(rms); // update the visualizer
     }
 
     /**
@@ -200,14 +192,13 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (!actionButton.isEnabled() || !actionButton.getText().equals(START_LABEL)
-                        || controller.isSpeaking()) {
+                while (!mainWindow.getPttState().equals(START_LABEL) || controller.isSpeaking()) {
                     try {
                         Thread.sleep(500);
                     } catch (Exception e) {
                     }
                 }
-                actionButton.doClick();
+                pttPressed();
             }
         };
         thread.start();

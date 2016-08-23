@@ -42,6 +42,8 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 @SuppressWarnings("serial")
@@ -63,6 +65,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     // Label strings for various objects on the GUI
     private static final String APP_TITLE = "Alexa Voice Service";
     private static final String START_LABEL = "Start Listening";
+    private String pttState;
     
     // GPIO VARIABLES
     private final GpioController gpio = GpioFactory.getInstance();
@@ -108,6 +111,9 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
         
         // Create gui listeners
         createListeners();
+        
+        // Start GUI text updater threads
+        startGUIUpdateThreads();
     }
       
     /**
@@ -116,9 +122,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     private void createListeners() {
         
         // Set the action button params, action button will be replaced bu physical btn
-        actionButton.setText(START_LABEL);
-        actionButton.setEnabled(true);
-        actionButton.addActionListener(new MyButtonListerner(alexa));
+        pttState = START_LABEL;
         
         // Cretae physical button params
         pttButton.setShutdownOptions(true);        
@@ -159,17 +163,17 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
      * Returns the action button
      * @return JButton
      */
-    public JButton getActionButton () {
-        return this.actionButton;
+    public String getPttState () {
+        return this.pttState;
     }
     
     /**
-     * Returns the visualizer
-     * @return JProgress Bar
+     * Returns the action button
+     * @param state
      */
-    public javax.swing.JProgressBar getVisualizer() {
-        return this.visualizer;
-    }  
+    public void setPttState (String state) {
+        this.pttState = state;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -182,73 +186,81 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         mainPanel = new javax.swing.JPanel();
-        visualizer = new javax.swing.JProgressBar();
-        actionButton = new javax.swing.JButton();
-        container = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        timePanel = new javax.swing.JPanel();
+        dateLabel = new javax.swing.JLabel();
+        weatherPanel = new javax.swing.JPanel();
 
         jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("mainWindow"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1080, 1920));
         setResizable(false);
 
-        mainPanel.setName(""); // NOI18N
+        mainPanel.setBackground(new java.awt.Color(0, 0, 0));
 
-        actionButton.setText("jButton1");
+        timePanel.setBackground(new java.awt.Color(0, 0, 0));
+        timePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
-        container.setLayout(containerLayout);
-        containerLayout.setHorizontalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 962, Short.MAX_VALUE)
+        dateLabel.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        dateLabel.setForeground(new java.awt.Color(255, 255, 255));
+        dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dateLabel.setText("Day Month Year");
+
+        javax.swing.GroupLayout timePanelLayout = new javax.swing.GroupLayout(timePanel);
+        timePanel.setLayout(timePanelLayout);
+        timePanelLayout.setHorizontalGroup(
+            timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        containerLayout.setVerticalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 157, Short.MAX_VALUE)
+        timePanelLayout.setVerticalGroup(
+            timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(304, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Blah");
+        weatherPanel.setBackground(new java.awt.Color(0, 0, 0));
+        weatherPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        javax.swing.GroupLayout weatherPanelLayout = new javax.swing.GroupLayout(weatherPanel);
+        weatherPanel.setLayout(weatherPanelLayout);
+        weatherPanelLayout.setHorizontalGroup(
+            weatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 354, Short.MAX_VALUE)
+        );
+        weatherPanelLayout.setVerticalGroup(
+            weatherPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 340, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(actionButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(visualizer, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(weatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
+                .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(visualizer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(actionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
-                .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(296, Short.MAX_VALUE))
+                    .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(weatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 599, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,12 +322,11 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton actionButton;
-    private javax.swing.JPanel container;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JProgressBar visualizer;
+    private javax.swing.JPanel timePanel;
+    private javax.swing.JPanel weatherPanel;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -323,6 +334,48 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
      */
     public void toggelPin() {
         pin.toggle();
+    }
+
+    /**
+     * Starts different threads for the GUI elements
+     */
+    private void startGUIUpdateThreads() {
+        
+        // Thread that updates the day month year text
+        Thread dateThread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    
+                    // Get the current calendar day
+                    Calendar cal = Calendar.getInstance();
+                    String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()); 
+                    String weekDay = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()); 
+                    String day = cal.getDisplayName(Calendar.DAY_OF_MONTH, Calendar.LONG, Locale.getDefault()); 
+                    String year = cal.getDisplayName(Calendar.YEAR, Calendar.LONG, Locale.getDefault()); 
+                    
+                    // Set the label
+                    dateLabel.setText(weekDay + ", " + month + " " + day + ", " + year);
+                            
+                    try {
+                        // Determin how long until the next day so we are not updating all the time
+                        Calendar c = cal;
+                        c.add(Calendar.DAY_OF_MONTH, 1);
+                        c.set(Calendar.HOUR_OF_DAY, 0);
+                        c.set(Calendar.MINUTE, 0);
+                        c.set(Calendar.SECOND, 1);
+                        c.set(Calendar.MILLISECOND, 0);
+                        
+                        long howManyMilli = (c.getTimeInMillis()-System.currentTimeMillis());
+                        
+                        Thread.sleep(howManyMilli);
+                        
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        };
+        dateThread.start();
     }
 }
 

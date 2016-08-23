@@ -158,10 +158,10 @@
     </dependency>
     <dependency>
       <groupId>opencv</groupId>
-      <artifactId>opencv-2413</artifactId>
-      <version>2.4.13</version>
+      <artifactId>opencv-310</artifactId>
+      <version>3.1.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/opencv-2413.jar</systemPath>
+      <systemPath>${basedir}/lib/opencv-310.jar</systemPath>
     </dependency>
   </dependencies>
   <build>

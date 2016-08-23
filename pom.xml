@@ -159,9 +159,9 @@
     <dependency>
       <groupId>org.bytedeco</groupId>
       <artifactId>javacv</artifactId>
-      <version>1.2</version>
+      <version>1.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/javacv.jar</systemPath>
+      <systemPath>${basedir}/lib/javacv-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
@@ -211,9 +211,9 @@
     <dependency>
       <groupId>org.bytedeco</groupId>
       <artifactId>javacpp</artifactId>
-      <version>1.2.3</version>
+      <version>1.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/javacpp.jar</systemPath>
+      <systemPath>${basedir}/lib/javacpp-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
@@ -233,17 +233,17 @@
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>opencv</artifactId>
-      <version>3.1.0-1.2</version>
+      <version>3.0.0-1.0</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/opencv.jar</systemPath>
+      <systemPath>${basedir}/lib/opencv-3.0.0-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>
       <artifactId>opencv</artifactId>
-      <version>3.1.0-1.2</version>
-      <classifier>linux-armhf</classifier>
+      <version>3.0.0-1.0</version>
+      <classifier>linux-arm</classifier>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/opencv-linux-armhf.jar</systemPath>
+      <systemPath>${basedir}/lib/opencv-3.0.0-1.0-linux-arm.jar</systemPath>
     </dependency>
   </dependencies>
   <build>

@@ -157,11 +157,9 @@
       <version>1.1</version>
     </dependency>
     <dependency>
-      <groupId>opencv</groupId>
-      <artifactId>opencv-310</artifactId>
-      <version>3.1.0</version>
-      <scope>system</scope>
-      <systemPath>${basedir}/lib/opencv-310.jar</systemPath>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacv</artifactId>
+      <version>1.2</version>
     </dependency>
   </dependencies>
   <build>

@@ -21,13 +21,7 @@
 package com.lyonsdensoftware.vanitymirror;
 
 // IMPORTS
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.objdetect.CascadeClassifier;
+
 import com.hopding.jrpicam.RPiCamera;
 
 
@@ -38,7 +32,6 @@ public class FaceRecognition {
     
     public FaceRecognition() {
         // Load the native library.
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
         //Highgui.imread("Test");
     }

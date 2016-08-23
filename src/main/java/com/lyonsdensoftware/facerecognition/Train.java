@@ -26,9 +26,13 @@ import java.io.File;
 import java.util.List;
 import java.util.Vector;
 import org.apache.commons.io.FilenameUtils;
-import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 
+
+import static org.bytedeco.javacpp.opencv_core.*;
+import static org.bytedeco.javacpp.opencv_face.*;
+import static org.bytedeco.javacpp.opencv_highgui.*;
+import static org.bytedeco.javacpp.opencv_imgcodecs.imread;
+import static org.bytedeco.javacpp.opencv_imgproc.*;
 
 
 
@@ -36,11 +40,16 @@ public class Train {
     
     // CLASS VARIABLES
     private final String TRAINING_FOLDER = "/home/pi/faceRecTraining/"; // Path to the training folder
+    private final String TRAINING_FILE = TRAINING_FOLDER + "training.xml";
+    private final String MEAN_FILE = TRAINING_FOLDER + "mean.png";
+    private final String POSITIVE_EIGENFACE_FILE = TRAINING_FOLDER + "positive_eigenface.png";
+    private final String NEGATIVE_EIGENFACE_FILE = TRAINING_FOLDER + "negative_eigenface.png";
     private String[] filePaths;                                         // Path to the files requested
-    private String[] labels;
+    private int[]  labels;
     private int pos_count = 0, neg_count = 0, fileCount = 0;
-    private final String NEGATIVE_LABEL = "2";
-    //private FaceRecognizer model;
+    private final int NEGATIVE_LABEL = 2;
+    private FaceRecognizer model;
+    private final int FACE_WIDTH  = 92, FACE_HEIGHT = 112;
     
     
     // Constructor
@@ -49,9 +58,9 @@ public class Train {
         // Variables
         File root = new File(TRAINING_FOLDER);
         filePaths = new String[root.listFiles().length];
-        labels = new String[root.listFiles().length];
-        List<Mat> faces = null; 
-        List<String> labelsList = null;
+        //labels = new Vector[root.listFiles().length];
+        MatVector faces = null; 
+        Mat labelsList = new Mat(labels);
         
         // Read through all negative images
         String startDirectory = TRAINING_FOLDER + "negative";
@@ -61,12 +70,25 @@ public class Train {
         
         // Now do the actual training
         for (int i = 0; i <= fileCount; i ++) {
-            faces.add(Imgcodecs.imread(filePaths[i], Imgcodecs.IMREAD_GRAYSCALE)); 
-            labelsList.add(labels[i]);
+            faces.put(prepareImage(filePaths[i])); 
+            //labelsList.(labels[i]);
         }
         
-        //model = createEigenFaceRecognizer();
+        model = createEigenFaceRecognizer();
+        model.train(faces, labelsList);
+        model.save(TRAINING_FILE);
         
+        //Mat mean = model.getMat();
+        
+    }
+    
+    private Mat prepareImage(String filename) {
+        Mat newImage = new Mat();
+        Size mySize = new Size(FACE_WIDTH, FACE_HEIGHT);
+        resize(imread(filename, COLOR_BGRA2GRAY), 
+                newImage, mySize);
+        
+        return newImage;
     }
     
     /**
@@ -74,7 +96,7 @@ public class Train {
      * @param path Path to start looking
      * @param label Label to add to the labels
      */
-    private void walk(String path, String label) {
+    private void walk(String path, int label) {
         File root = new File (path);
         File[] fileList = root.listFiles();
         
@@ -88,7 +110,7 @@ public class Train {
                     filePaths[fileCount] = f.getAbsolutePath();
                     labels[fileCount] = label;
                     
-                    if (label.equals(NEGATIVE_LABEL))
+                    if (label == NEGATIVE_LABEL)
                         neg_count += 1;
                     else
                         pos_count += 1;

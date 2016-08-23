@@ -198,7 +198,7 @@
       <artifactId>flandmark</artifactId>
       <version>1.07-1.2</version>
       <scope>system</scope>
-      <systemPath>${basedir}/lib/flandmarkjar</systemPath>
+      <systemPath>${basedir}/lib/flandmark.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.bytedeco.javacpp-presets</groupId>

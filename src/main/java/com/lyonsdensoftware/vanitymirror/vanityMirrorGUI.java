@@ -22,10 +22,10 @@
 package com.lyonsdensoftware.vanitymirror;
 
 // IMPORTS
-import com.amazon.alexa.avs.config.DeviceConfig;
-import com.amazon.alexa.avs.config.DeviceConfigUtils;
+import com.lyonsdensoftware.config.DeviceConfig;
+import com.lyonsdensoftware.config.DeviceConfigUtils;
 
-import com.lyonsdensoftware.facerecognition.Train;
+//import com.lyonsdensoftware.facerecognition.Train;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +43,23 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.Locale;
 
 
 @SuppressWarnings("serial")
 public class vanityMirrorGUI extends javax.swing.JFrame {
+
+    
     
     // CLASS VARIABLES
+    private Socket socket;                                                              // Reference to the client socket
+    private static DataOutputStream toServer;						// Output stream to master server or game server
+    private static DataInputStream fromServer;						// Input from either the game server or master server
+    private final PythonConnectionThread myPythonConnection;
     
     /**
      * Logger for the vanityMirrorGUI class.
@@ -80,11 +89,14 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
      * GPIO pin that is connected to an LED. USed for testing
      */
     final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "MyLED", PinState.LOW);
+    
+    private final DeviceConfig configFile;
 
     // FUNCTIONS 
     
     /**
      * Creates new form vanityMirrorGUI
+     * @throws java.lang.Exception
      */
     public vanityMirrorGUI() throws Exception {
         this(DeviceConfigUtils.readConfigFile());
@@ -93,6 +105,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     /**
      * Creates new form vanityMirrorGUI
      * @param configName is a string of the config name
+     * @throws java.lang.Exception
      */
     public vanityMirrorGUI(String configName) throws Exception {
         this(DeviceConfigUtils.readConfigFile(configName));
@@ -101,20 +114,26 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     /**
      * Creates new form vanityMirrorGUI
      * @param config is the device config to create the mirror gui
+     * @throws java.lang.Exception
      */
     public vanityMirrorGUI(DeviceConfig config) throws Exception {
         
         // init gui components
         initComponents();
         
+        this.configFile = config;
+        
         // Create a new alexa
-        alexa = new Alexa(config, this);
+        alexa = new Alexa(this);
         
         // Create gui listeners
         createListeners();
         
         // Start GUI text updater threads
         startGUIUpdateThreads();
+        
+        // Connect to Python TCP Server
+        this.myPythonConnection = connectPythonTCPServer();
     }
       
     /**
@@ -174,6 +193,48 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
      */
     public void setPttState (String state) {
         this.pttState = state;
+    }
+    
+    /**
+     * @return the toServer
+     */
+    public DataOutputStream getToServer() {
+        return toServer;
+    }
+
+    /**
+     * @return the fromServer
+     */
+    public DataInputStream getFromServer() {
+        return fromServer;
+    }
+    
+    /**
+     * @param out
+     */
+    public void setToServer(DataOutputStream out) {
+        toServer = out;
+    }
+
+    /**
+     * @param in
+     */
+    public void setFromServer(DataInputStream in) {
+        fromServer = in;
+    }
+    
+    // Connects to the Python TCP Server
+    public PythonConnectionThread connectPythonTCPServer() {
+		
+        // Connects to the master server
+        // Create a handler thread
+        PythonConnectionThread task = new PythonConnectionThread(this, this.socket);
+                
+        // Start the new thread
+        new Thread(task).start();
+        
+        return task;
+            
     }
 
     /**
@@ -286,12 +347,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Weather myWeatherObj = new Weather();
-            System.out.println(myWeatherObj.getCurrentWeatherAsJson().toString());
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(vanityMirrorGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.myPythonConnection.sendMessageToServer("Request", "SomeRequest");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -375,9 +431,10 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
                     // Get the current calendar day
                     Calendar cal = Calendar.getInstance();
                     String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()); 
-                    String weekDay = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()); 
-                    String day = cal.getDisplayName(Calendar.DAY_OF_MONTH, Calendar.LONG, Locale.getDefault()); 
-                    String year = cal.getDisplayName(Calendar.YEAR, Calendar.LONG, Locale.getDefault()); 
+                    String weekDay = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                    cal.get(Calendar.DAY_OF_MONTH);
+                    String day = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+                    String year = Integer.toString(cal.get(Calendar.YEAR));
                     
                     // Set the label
                     dateLabel.setText(weekDay + ", " + month + " " + day + ", " + year);
@@ -401,6 +458,13 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
             }
         };
         dateThread.start();
+    }
+
+    /**
+     * @return the configFile
+     */
+    public DeviceConfig getConfigFile() {
+        return configFile;
     }
 }
 

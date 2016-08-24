@@ -36,13 +36,18 @@ public class DeviceConfig {
     // CLASS VARIABLES - These should match what is stored on the config file
     public static final String FILE_NAME = "mirrorConfig.json";
     
-    // These will hold the config info and will change based off inputs
+    // Wunderground Settings
     private String wundergroundApiKey;
     private String wundergroundStateIdentifier;
     private String wundergroundCity;
     
+    // Program Settings
     private final String productId;
     private final String dsn;
+    
+    // Python TCP settings
+    private final String hostname;
+    private final int port; 
     
     /**
      * Constructor
@@ -51,13 +56,15 @@ public class DeviceConfig {
      * @param wundergroundCity 
      */
     public DeviceConfig(String wundergroundApiKey, String wundergroundStateIdentifier, 
-            String wundergroundCity, String productId, String dsn)
+            String wundergroundCity, String productId, String dsn, String hostname, int port)
     {
         this.wundergroundApiKey = wundergroundApiKey;
         this.wundergroundCity = wundergroundCity;
         this.wundergroundStateIdentifier = wundergroundStateIdentifier;
         this.productId = productId;
         this.dsn = dsn;
+        this.hostname = hostname;
+        this.port = port;
     }
     
     /**
@@ -125,6 +132,24 @@ public class DeviceConfig {
             .add("wundergroundStateIdentifier", wundergroundStateIdentifier)
             .add("wundergroundCity", wundergroundCity));
         
+        builder.add("pythonTCPSettings", Json.createObjectBuilder()
+            .add("hostname", getHostname())
+            .add("port", getPort()));
+        
         return builder.build();
+    }
+
+    /**
+     * @return the hostname
+     */
+    public String getHostname() {
+        return hostname;
+    }
+
+    /**
+     * @return the port
+     */
+    public int getPort() {
+        return port;
     }
 }

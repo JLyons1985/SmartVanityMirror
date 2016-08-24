@@ -77,6 +77,25 @@ public class Alexa implements ExpectSpeechListener, RecordingRMSListener,
     private final AuthSetup authSetup;
     
     /**
+     * 
+     * @param mainWindow
+     * @throws Exception 
+     */
+    public Alexa(vanityMirrorGUI mainWindow) throws Exception {
+        this(DeviceConfigUtils.readConfigFile(), mainWindow);
+    }
+    
+    /**
+     * 
+     * @param configName
+     * @param mainWindow
+     * @throws Exception 
+     */
+    public Alexa(String configName, vanityMirrorGUI mainWindow) throws Exception {
+        this(DeviceConfigUtils.readConfigFile(configName), mainWindow);
+    }
+    
+    /**
      * Creates a new Alexa
      * @param config Config to get passed to Alexa
      * @param mainWindow Reference to the vanityMirrorGUI window

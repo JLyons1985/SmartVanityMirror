@@ -74,9 +74,13 @@ public final class DeviceConfigUtils {
             String productId = configObject.getString("productId");
             String dsn = configObject.getString("dsn");
             
+            JsonObject pythonTCPSettings = configObject.getJsonObject("pythonTCPSettings");
+            String hostname = pythonTCPSettings.getString("hostname");
+            int port = pythonTCPSettings.getInt("port");
+            
 
             DeviceConfig deviceConfig = new DeviceConfig(wundergroundApiKey, wundergroundStateIdentifier, 
-                wundergroundCity, productId, dsn);
+                wundergroundCity, productId, dsn, hostname, port);
 
             return deviceConfig;
         } catch (FileNotFoundException e) {

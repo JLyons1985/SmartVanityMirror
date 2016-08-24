@@ -18,6 +18,7 @@
 * @author Joshua Lyons (josh@lyonsdensoftware.com)
 * @version 0.0.1
 *************************************************************************/
+/**
 package com.lyonsdensoftware.facerecognition;
 
 // IMPORT
@@ -95,7 +96,7 @@ public class Train {
      * Walks through the directory finding files
      * @param path Path to start looking
      * @param label Label to add to the labels
-     */
+     *
     private void walk(String path, int label) {
         File root = new File (path);
         File[] fileList = root.listFiles();
@@ -123,3 +124,4 @@ public class Train {
     }
     
 }
+*/

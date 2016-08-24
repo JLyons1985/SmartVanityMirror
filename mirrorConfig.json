@@ -5,5 +5,9 @@
         "wundergroundApiKey":"1057953ee05f3f01",
         "wundergroundStateIdentifier":"AZ",
         "wundergroundCity":"Phoenix"
+    },
+    "pythonTCPSettings":{
+        "hostname":"localhost",
+        "port":9999
     }
 }

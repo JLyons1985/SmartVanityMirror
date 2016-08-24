@@ -61,7 +61,7 @@ public class PythonConnectionThread implements Runnable{
         try {
 
             // Create a socket to connect to the server
-            socket = new Socket(this.mainWindow.getConfigFile().getHostname(), 
+            this.socket = new Socket(this.mainWindow.getConfigFile().getHostname(), 
                 this.mainWindow.getConfigFile().getPort());
             
             // Note it in the log
@@ -72,6 +72,7 @@ public class PythonConnectionThread implements Runnable{
 
             // Create an input stream to receive data from the server
             mainWindow.setFromServer(new DataInputStream( socket.getInputStream() ));
+            
 
             // Create an output stream to send data to the server
             mainWindow.setToServer(new DataOutputStream( socket.getOutputStream() ));

@@ -89,9 +89,13 @@ public class PythonConnectionThread implements Runnable{
                     
                     JSONObject json = new JSONObject(gson.fromJson(in.readLine(), JSONObject.class));
                                         
-                    if (json.keys().hasNext())
+                    if (json.keys().hasNext()) {
                         // handle the data
-                        handleDataFromServer(json);    
+                        handleDataFromServer(json);  
+                    }
+                    else {
+                        System.out.println(json.toString());
+                    }
                 }
             }
             
@@ -110,6 +114,8 @@ public class PythonConnectionThread implements Runnable{
         String tmpMessages;
         JSONObject tmpJson;
         Gson gson;
+        
+        System.out.println(json.toString());
         
         // Determine how to handle the message
         switch (json.get("messageType").toString()) {

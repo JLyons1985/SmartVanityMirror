@@ -259,6 +259,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
         setName("mainWindow"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1080, 1920));
         setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
 
         mainPanel.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -325,7 +326,7 @@ public class vanityMirrorGUI extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(weatherPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 599, Short.MAX_VALUE))
+                .addGap(0, 1578, Short.MAX_VALUE))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(195, 195, 195)
                 .addComponent(jButton1)
